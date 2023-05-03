@@ -51,7 +51,7 @@ class MatrixSymbol {
   }
 
   rain() {
-    this.y = (this.y >= height) ? 0 : this.y + this.speed;
+    this.y = (this.y >= height) ? -round(random(symbolSize, symbolSize * 10)) : this.y + this.speed;
   }
 }
 
