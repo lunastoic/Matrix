@@ -104,7 +104,7 @@ class MatrixSymbol {
 class Stream {
   constructor(x) {
     this.symbols = [];
-    this.totalSymbols = round(random(5, 30));
+    this.totalSymbols = round(random(15, 50));
     this.speed = round(random(2, 5));
     this.x = x;
 
