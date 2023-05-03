@@ -3,7 +3,7 @@ let streams = [];
 let brightnessThreshold = 75;
 
 function setup() {
-  createCanvas(window.innerWidth, window.innerHeight);
+  createCanvas(350, 800);
   video = createCapture(VIDEO);
   video.hide();
 
@@ -81,4 +81,4 @@ class Stream {
       symbol.setRandomValue();
     });
   }
-} 
+}
