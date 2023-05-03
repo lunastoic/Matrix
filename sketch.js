@@ -29,12 +29,19 @@ function draw() {
 }
 
 function getBrightness(x, y) {
-  const index = (floor(x) + floor(y) * video.width) * 4;
+  const scaleFactorWidth = video.width / width;
+  const scaleFactorHeight = video.height / height;
+
+  const scaledX = floor(x * scaleFactorWidth);
+  const scaledY = floor(y * scaleFactorHeight);
+
+  const index = (scaledX + scaledY * video.width) * 4;
   const r = video.pixels[index];
   const g = video.pixels[index + 1];
   const b = video.pixels[index + 2];
   return (r + g + b) / 3;
 }
+
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
