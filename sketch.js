@@ -1,6 +1,9 @@
 let symbolSize = 16;
 let streams = [];
 let brightnessThreshold = 75;
+let video;
+let cameraButton;
+let currentCamera = 0;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -13,6 +16,34 @@ function setup() {
   }
 
   textSize(symbolSize);
+  // Create the camera switch button
+  cameraButton = createButton('Switch Camera');
+  cameraButton.position(20, 20);
+  cameraButton.mousePressed(switchCamera);
+}
+async function switchCamera() {
+  // Stop the current camera stream
+  video.stop();
+
+  // Get the available devices
+  const devices = await navigator.mediaDevices.enumerateDevices();
+
+  // Filter the video input devices
+  const videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+  // Switch to the next camera
+  currentCamera = (currentCamera + 1) % videoDevices.length;
+  const cameraId = videoDevices[currentCamera].deviceId;
+
+  // Create a new video capture with the selected camera
+  const constraints = {
+    video: {
+      deviceId: cameraId,
+    },
+  };
+
+  video = createCapture(constraints);
+  video.hide();
 }
 
 function draw() {
