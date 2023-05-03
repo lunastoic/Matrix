@@ -20,13 +20,12 @@ function draw() {
 
   if (video.loadedmetadata) {
     image(video, 0, 0, width, height);
+    video.loadPixels();
+
+    streams.forEach(stream => {
+      stream.render();
+    });
   }
-
-  video.loadPixels();
-
-  streams.forEach(stream => {
-    stream.render();
-  });
 }
 
 function getBrightness(x, y) {
@@ -94,3 +93,4 @@ function windowResized() {
   }
   setupStreams(); // Reinitialize the streams
 }
+
