@@ -1,18 +1,28 @@
 let symbolSize = 16;
 let streams = [];
 let brightnessThreshold = 75;
+let video;
 
-function setup() {
-  createCanvas(windowWidth, windowHeight);
+function setupVideo() {
+  if (video) {
+    video.remove(); // Remove the previous video capture element
+  }
   video = createCapture(VIDEO);
   video.hide();
+}
 
-  // Decrease the horizontal spacing between streams by using a smaller divisor
+function setupStreams() {
+  streams = [];
   for (let x = 0; x < width / (symbolSize * 0.4); x++) {
     const stream = new Stream(x * symbolSize * 0.4);
     streams.push(stream);
   }
+}
 
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  setupVideo();
+  setupStreams();
   textSize(symbolSize);
 }
 
@@ -58,7 +68,7 @@ class MatrixSymbol {
 class Stream {
   constructor(x) {
     this.symbols = [];
-    this.totalSymbols = round(random(6, 40));
+    this.totalSymbols = round(random(10, 50));
     this.speed = round(random(2, 5));
     this.x = x;
 
@@ -85,7 +95,8 @@ class Stream {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  setup(); // Reinitialize the streams
+  setupVideo();
+  setupStreams(); // Reinitialize the streams
 }
 
 
