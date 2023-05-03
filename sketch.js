@@ -5,16 +5,23 @@ let video;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  video = createCapture(VIDEO);
+  video = createCapture(VIDEO, onVideoReady);
   video.hide();
+  textSize(symbolSize);
+}
+
+function onVideoReady() {
   video.size(width, height);
   setupStreams();
-  textSize(symbolSize);
 }
 
 function draw() {
   background(0, 150);
-  image(video, 0, 0, width, height);
+
+  if (video.loadedmetadata) {
+    image(video, 0, 0, width, height);
+  }
+
   video.loadPixels();
 
   streams.forEach(stream => {
@@ -82,6 +89,8 @@ class Stream {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  video.size(width, height);
+  if (video.loadedmetadata) {
+    video.size(width, height);
+  }
   setupStreams(); // Reinitialize the streams
 }
