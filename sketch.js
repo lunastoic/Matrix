@@ -104,7 +104,7 @@ class MatrixSymbol {
 class Stream {
   constructor(x) {
     this.symbols = [];
-    this.totalSymbols = round(random(15, 50));
+    this.totalSymbols = round(random(20, 50));
     this.speed = round(random(2, 5));
     this.x = x;
 
@@ -119,9 +119,9 @@ class Stream {
     this.symbols.forEach(symbol => {
       const brightness = getBrightness(symbol.x, symbol.y);
       if (brightness > brightnessThreshold) {
-        fill(50, 50, 100); // Hit detected, change text color to pink
+        fill(128, 0, 128); // Hit detected, change text color to pink
       } else {
-        fill(150, 50, 100); // No hit, change text color to purple
+        fill(255, 20, 147); // No hit, change text color to purple
       }
       text(symbol.value, symbol.x, symbol.y);
       symbol.rain();
