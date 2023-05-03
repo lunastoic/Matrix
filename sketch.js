@@ -3,11 +3,10 @@ let streams = [];
 let brightnessThreshold = 75;
 
 function setup() {
-  createCanvas(900, 1100);
+  createCanvas(windowWidth, windowHeight);
   video = createCapture(VIDEO);
   video.hide();
 
-  // Decrease the horizontal spacing between streams by using a smaller divisor
   for (let x = 0; x < width / (symbolSize * 0.6); x++) {
     const stream = new Stream(x * symbolSize * 0.6);
     streams.push(stream);
@@ -31,6 +30,15 @@ function getBrightness(x, y) {
   const g = video.pixels[index + 1];
   const b = video.pixels[index + 2];
   return (r + g + b) / 3;
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  streams = [];
+  for (let x = 0; x < width / (symbolSize * 0.6); x++) {
+    const stream = new Stream(x * symbolSize * 0.6);
+    streams.push(stream);
+  }
 }
 
 class MatrixSymbol {
@@ -63,7 +71,8 @@ class Stream {
     this.x = x;
 
     for (let i = 0; i < this.totalSymbols; i++) {
-      const symbol = new MatrixSymbol(this.x, i * symbolSize, this.speed);
+      const randomYOffset = -round(random(0, this.totalSymbols)) * symbolSize;
+      const symbol = new MatrixSymbol(this.x, i * symbolSize + randomYOffset, this.speed);
       this.symbols.push(symbol);
     }
   }
@@ -82,3 +91,5 @@ class Stream {
     });
   }
 }
+
+
