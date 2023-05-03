@@ -3,7 +3,7 @@ let streams = [];
 let brightnessThreshold = 75;
 
 function setup() {
-  createCanvas(350, 800);
+  createCanvas(900, 1100);
   video = createCapture(VIDEO);
   video.hide();
 
