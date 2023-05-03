@@ -17,6 +17,10 @@ function setup() {
 
 function draw() {
   background(0, 150);
+
+  // Draw the video capture scaled to the canvas size
+  image(video, 0, 0, width, height);
+
   video.loadPixels();
 
   streams.forEach(stream => {
@@ -66,7 +70,7 @@ class MatrixSymbol {
 class Stream {
   constructor(x) {
     this.symbols = [];
-    this.totalSymbols = round(random(10, 44));
+    this.totalSymbols = round(random(5, 30));
     this.speed = round(random(2, 5));
     this.x = x;
 
@@ -91,5 +95,4 @@ class Stream {
     });
   }
 }
-
 
