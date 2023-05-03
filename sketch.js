@@ -16,10 +16,7 @@ function setup() {
 }
 
 function draw() {
-  background(0, 150);
-
-  // Draw the video capture scaled to the canvas size
-  image(video, 0, 0, width, height);
+  background(0);
 
   video.loadPixels();
 
@@ -41,7 +38,6 @@ function getBrightness(x, y) {
   const b = video.pixels[index + 2];
   return (r + g + b) / 3;
 }
-
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
@@ -92,9 +88,9 @@ class Stream {
     this.symbols.forEach(symbol => {
       const brightness = getBrightness(symbol.x, symbol.y);
       if (brightness > brightnessThreshold) {
-        fill(255, 20, 147); // Hit detected, change text color to pink
+        fill(255, 20, 147, brightness); // Hit detected, change text color to pink with brightness as alpha
       } else {
-        fill(128, 0, 128); // No hit, change text color to purple
+        fill(128, 0, 128, brightness); // No hit, change text color to purple with brightness as alpha
       }
       text(symbol.value, symbol.x, symbol.y);
       symbol.rain();
@@ -102,4 +98,5 @@ class Stream {
     });
   }
 }
+
 
