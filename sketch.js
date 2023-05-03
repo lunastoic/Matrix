@@ -1,31 +1,28 @@
 let symbolSize = 16;
 let streams = [];
 let brightnessThreshold = 75;
-let video;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  video = createCapture(VIDEO, onVideoReady);
+  createCanvas(window.innerWidth, window.innerHeight);
+  video = createCapture(VIDEO);
   video.hide();
-  textSize(symbolSize);
-}
 
-function onVideoReady() {
-  video.size(width, height);
-  setupStreams();
+  // Decrease the horizontal spacing between streams by using a smaller divisor
+  for (let x = 0; x < width / (symbolSize * 0.6); x++) {
+    const stream = new Stream(x * symbolSize * 0.6);
+    streams.push(stream);
+  }
+
+  textSize(symbolSize);
 }
 
 function draw() {
   background(0, 150);
+  video.loadPixels();
 
-  if (video.loadedmetadata) {
-    image(video, 0, 0, width, height);
-    video.loadPixels();
-
-    streams.forEach(stream => {
-      stream.render();
-    });
-  }
+  streams.forEach(stream => {
+    stream.render();
+  });
 }
 
 function getBrightness(x, y) {
@@ -61,7 +58,7 @@ class MatrixSymbol {
 class Stream {
   constructor(x) {
     this.symbols = [];
-    this.totalSymbols = round(random(10, 50));
+    this.totalSymbols = round(random(5, 30));
     this.speed = round(random(2, 5));
     this.x = x;
 
@@ -84,13 +81,4 @@ class Stream {
       symbol.setRandomValue();
     });
   }
-}
-
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-  if (video.loadedmetadata) {
-    video.size(width, height);
-  }
-  setupStreams(); // Reinitialize the streams
-}
-
+} 
