@@ -3,31 +3,18 @@ let streams = [];
 let brightnessThreshold = 75;
 let video;
 
-function setupVideo() {
-  if (video) {
-    video.remove(); // Remove the previous video capture element
-  }
-  video = createCapture(VIDEO);
-  video.hide();
-}
-
-function setupStreams() {
-  streams = [];
-  for (let x = 0; x < width / (symbolSize * 0.4); x++) {
-    const stream = new Stream(x * symbolSize * 0.4);
-    streams.push(stream);
-  }
-}
-
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  setupVideo();
+  video = createCapture(VIDEO);
+  video.hide();
+  video.size(width, height);
   setupStreams();
   textSize(symbolSize);
 }
 
 function draw() {
   background(0, 150);
+  image(video, 0, 0, width, height);
   video.loadPixels();
 
   streams.forEach(stream => {
@@ -95,8 +82,6 @@ class Stream {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  setupVideo();
+  video.size(width, height);
   setupStreams(); // Reinitialize the streams
 }
-
-
