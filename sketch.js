@@ -119,9 +119,9 @@ class Stream {
     this.symbols.forEach(symbol => {
       const brightness = getBrightness(symbol.x, symbol.y);
       if (brightness > brightnessThreshold) {
-        fill(128, 0, 128); // Hit detected, change text color to pink
+        fill(255, 20, 147); // Hit detected, change text color to pink
       } else {
-        fill(255, 20, 147); // No hit, change text color to purple
+        fill(128, 0, 128); // No hit, change text color to purple
       }
       text(symbol.value, symbol.x, symbol.y);
       symbol.rain();
